@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html lang="bn">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>⚡ FF Diamond Store - ফ্রি ফায়ার ডায়মন্ড</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #ff1744;
+            --secondary: #1a1a2e;
+            --dark: #0f0f1e;
+            --gold: #ffd700;
+            --accent: #00ff41;
+            --text: #e0e0e0;
+            --text-light: #b0b0b0;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, var(--dark) 0%, var(--secondary) 100%);
+            color: var(--text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(90deg, rgba(26, 26, 46, 0.95), rgba(15, 15, 30, 0.95));
+            border-bottom: 2px solid var(--primary);
+            padding: 20px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            box-shadow: 0 10px 40px rgba(255, 23, 68, 0.15);
+        }
+
+        .header-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 28px;
+            font-weight: bold;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--primary);
+            text-shadow: 0 0 10px rgba(255, 23, 68, 0.5);
+        }
+
+        .cart-icon {
+            position: relative;
+            cursor: pointer;
+            font-size: 24px;
+            transition: transform 0.3s;
+        }
+
+        .cart-icon:hover {
+            transform: scale(1.1);
+        }
+
+        .cart-count {
+            position: absolute;
+            top: -8px;
+            right: -8px;
+            background: var(--primary);
+            color: white;
+            width: 24px;
+            height: 24px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 12px;
+            font-weight: bold;
+        }
+
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.1), rgba(0, 255, 65, 0.05));
+            padding: 80px 20px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -10%;
+            width: 400px;
+            height: 400px;
+            background: radial-gradient(circle, rgba(255, 23, 68, 0.1) 0%, transparent 70%);
+            border-radius: 50%;
+            animation: float 6s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-20px); }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, var(--primary), var(--gold));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: slideIn 0.8s ease-out;
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateY(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero p {
+            font-size: 18px;
+            color: var(--text-light);
+            margin-bottom: 30px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--primary), #ff5555);
+            color: white;
+            padding: 15px 40px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+            box-shadow: 0 5px 20px rgba(255, 23, 68, 0.4);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 30px rgba(255, 23, 68, 0.6);
+        }
+
+        /* Products Section */
+        .products-section {
+            max-width: 1200px;
+            margin: 80px auto;
+            padding: 0 20px;
+        }
+
+        .section-title {
+            font-size: 36px;
+            margin-bottom: 50px;
+            text-align: center;
+            color: var(--primary);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            display: block;
+            width: 100px;
+            height: 3px;
+            background: linear-gradient(90deg, transparent, var(--primary), transparent);
+            margin: 15px auto 0;
+        }
+
+        .products-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .product-card {
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.05), rgba(0, 255, 65, 0.02));
+            border: 1px solid rgba(255, 23, 68, 0.3);
+            border-radius: 10px;
+            padding: 20px;
+            transition: all 0.3s;
+            cursor: pointer;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .product-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 23, 68, 0.2), transparent);
+            transition: left 0.5s;
+        }
+
+        .product-card:hover {
+            border-color: var(--primary);
+            transform: translateY(-10px);
+            box-shadow: 0 15px 40px rgba(255, 23, 68, 0.2);
+        }
+
+        .product-card:hover::before {
+            left: 100%;
+        }
+
+        .product-icon {
+            font-size: 60px;
+            text-align: center;
+            margin-bottom: 15px;
+        }
+
+        .product-name {
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+            color: var(--gold);
+        }
+
+        .product-description {
+            font-size: 14px;
+            color: var(--text-light);
+            margin-bottom: 15px;
+        }
+
+        .product-price {
+            font-size: 24px;
+            font-weight: bold;
+            color: var(--primary);
+            margin-bottom: 15px;
+        }
+
+        .add-to-cart {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), #ff5555);
+            color: white;
+            border: none;
+            padding: 12px;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: bold;
+            transition: all 0.3s;
+        }
+
+        .add-to-cart:hover {
+            box-shadow: 0 5px 15px rgba(255, 23, 68, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* Cart Modal */
+        .cart-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.8);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .cart-modal.active {
+            display: flex;
+        }
+
+        .modal-content {
+            background: var(--secondary);
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 30px;
+            max-width: 500px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+        }
+
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 2px solid var(--primary);
+        }
+
+        .modal-header h2 {
+            color: var(--primary);
+        }
+
+        .close-btn {
+            background: none;
+            border: none;
+            color: var(--primary);
+            font-size: 28px;
+            cursor: pointer;
+            transition: transform 0.3s;
+        }
+
+        .close-btn:hover {
+            transform: rotate(90deg);
+        }
+
+        .cart-item {
+            background: rgba(255, 23, 68, 0.1);
+            padding: 15px;
+            border-radius: 5px;
+            margin-bottom: 15px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-left: 3px solid var(--primary);
+        }
+
+        .cart-item-info h3 {
+            color: var(--gold);
+            margin-bottom: 5px;
+        }
+
+        .cart-item-info p {
+            color: var(--text-light);
+            font-size: 14px;
+        }
+
+        .cart-item-total {
+            color: var(--primary);
+            font-weight: bold;
+            font-size: 18px;
+        }
+
+        .remove-btn {
+            background: var(--primary);
+            color: white;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 3px;
+            cursor: pointer;
+            font-size: 12px;
+            transition: all 0.3s;
+        }
+
+        .remove-btn:hover {
+            transform: scale(1.05);
+        }
+
+        .cart-empty {
+            text-align: center;
+            color: var(--text-light);
+            padding: 40px 20px;
+        }
+
+        .cart-footer {
+            margin-top: 30px;
+            padding-top: 20px;
+            border-top: 2px solid var(--primary);
+            display: none;
+        }
+
+        .cart-total {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 20px;
+            color: var(--gold);
+        }
+
+        .checkout-btn {
+            width: 100%;
+            background: linear-gradient(135deg, var(--primary), #ff5555);
+            color: white;
+            border: none;
+            padding: 15px;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .checkout-btn:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 23, 68, 0.4);
+        }
+
+        /* Payment Modal */
+        .payment-modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 2000;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .payment-modal.active {
+            display: flex;
+        }
+
+        .payment-content {
+            background: linear-gradient(135deg, var(--secondary), rgba(255, 23, 68, 0.1));
+            border: 2px solid var(--primary);
+            border-radius: 10px;
+            padding: 40px;
+            max-width: 500px;
+            width: 90%;
+            text-align: center;
+        }
+
+        .payment-content h2 {
+            color: var(--primary);
+            margin-bottom: 20px;
+        }
+
+        .payment-method {
+            background: rgba(255, 23, 68, 0.1);
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 2px solid transparent;
+            transition: all 0.3s;
+            color: var(--text);
+        }
+
+        .payment-method:hover {
+            border-color: var(--primary);
+            transform: scale(1.02);
+        }
+
+        .success-message {
+            display: none;
+            color: var(--accent);
+            font-size: 18px;
+            margin: 20px 0;
+        }
+
+        .success-message.show {
+            display: block;
+            animation: slideIn 0.5s ease-out;
+        }
+
+        /* Testimonials */
+        .testimonials {
+            background: linear-gradient(135deg, rgba(255, 23, 68, 0.05), rgba(0, 255, 65, 0.02));
+            padding: 60px 20px;
+            margin-top: 80px;
+        }
+
+        .testimonials-container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .testimonial-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-top: 40px;
+        }
+
+        .testimonial {
+            background: var(--secondary);
+            padding: 25px;
+            border-radius: 10px;
+            border-left: 4px solid var(--primary);
+        }
+
+        .testimonial-rating {
+            color: var(--gold);
+            margin-bottom: 10px;
+            font-size: 18px;
+        }
+
+        .testimonial-text {
+            color: var(--text-light);
+            margin-bottom: 15px;
+            font-style: italic;
+        }
+
+        .testimonial-author {
+            color: var(--gold);
+            font-weight: bold;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            border-top: 2px solid var(--primary);
+            padding: 40px 20px;
+            text-align: center;
+            color: var(--text-light);
+            margin-top: 80px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 32px;
+            }
+
+            .section-title {
+                font-size: 24px;
+            }
+
+            .products-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .modal-content {
+                max-width: 90%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="header-container">
+            <div class="logo">
+                <span>⚡</span> FF Diamond Store
+            </div>
+            <div class="cart-icon" onclick="toggleCart()">
+                🛒
+                <span class="cart-count" id="cartCount">0</span>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <h1>💎 সুপারিয়র ডায়মন্ড স্টোর</h1>
+            <p>ফ্রি ফায়ারে আপনার গেমকে নতুন উচ্চতায় নিয়ে যান। সর্বোত্তম মূল্যে খাঁটি ডায়মন্ড পান!</p>
+            <button class="cta-button" onclick="document.querySelector('.products-section').scrollIntoView({behavior: 'smooth'})">এখনই কিনুন</button>
+        </div>
+    </section>
+
+    <!-- Products Section -->
+    <section class="products-section">
+        <h2 class="section-title">🎁 আমাদের প্যাকেজ</h2>
+        <div class="products-grid" id="productsContainer"></div>
+    </section>
+
+    <!-- Testimonials -->
+    <section class="testimonials">
+        <div class="testimonials-container">
+            <h2 class="section-title">⭐ গ্রাহক রিভিউ</h2>
+            <div class="testimonial-grid" id="testimonialsContainer"></div>
+        </div>
+    </section>
+
+    <!-- Cart Modal -->
+    <div class="cart-modal" id="cartModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>🛒 আপনার কার্ট</h2>
+                <button class="close-btn" onclick="toggleCart()">✕</button>
+            </div>
+            <div id="cartItems"></div>
+            <div class="cart-footer" id="cartFooter">
+                <div class="cart-total">
+                    <span>মোট:</span>
+                    <span id="totalPrice">0 টাকা</span>
+                </div>
+                <button class="checkout-btn" onclick="goToPayment()">পেমেন্টে যান</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="payment-modal" id="paymentModal">
+        <div class="payment-content">
+            <h2>💳 পেমেন্ট পদ্ধতি নির্বাচন করুন</h2>
+            <div class="payment-method" onclick="processPayment('bkash')">
+                <p style="font-size: 24px; margin: 0;">📱 bKash</p>
+                <p style="font-size: 12px; margin: 5px 0 0 0;">সবচেয়ে দ্রুত পেমেন্ট</p>
+            </div>
+            <div class="payment-method" onclick="processPayment('nagad')">
+                <p style="font-size: 24px; margin: 0;">📱 Nagad</p>
+                <p style="font-size: 12px; margin: 5px 0 0 0;">সহজ এবং নিরাপদ</p>
+            </div>
+            <div class="payment-method" onclick="processPayment('rocket')">
+                <p style="font-size: 24px; margin: 0;">📱 Rocket</p>
+                <p style="font-size: 12px; margin: 5px 0 0 0;">সর্বোচ্চ নিরাপত্তা</p>
+            </div>
+            <div id="successMessage" class="success-message">✓ পেমেন্ট সফল! ধন্যবাদ</div>
+            <button class="cta-button" style="margin-top: 20px; width: 100%;" onclick="closePayment()">বন্ধ করুন</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2024 FF Diamond Store. সকল অধিকার সংরক্ষিত। | নিরাপদ পেমেন্ট | দ্রুত ডেলিভারি | ২৪/৭ সাপোর্ট</p>
+    </footer>
+
+    <script>
+        // Products Data
+        const products = [
+            { id: 1, name: '50 ডায়মন্ড', price: 50, icon: '💎', description: 'ছোট প্যাকেজ' },
+            { id: 2, name: '100 ডায়মন্ড', price: 100, icon: '💎💎', description: 'মাঝারি প্যাকেজ' },
+            { id: 3, name: '500 ডায়মন্ড', price: 500, icon: '💎💎💎', description: 'বড় প্যাকেজ' },
+            { id: 4, name: '1000 ডায়মন্ড', price: 1000, icon: '👑', description: 'প্রিমিয়াম প্যাকেজ' },
+            { id: 5, name: 'আল্টিমেট বান্ডেল', price: 2500, icon: '🔥', description: 'সবচেয়ে জনপ্রিয়' },
+            { id: 6, name: 'বসের সংগ্রহ', price: 5000, icon: '👑🔥', description: 'চূড়ান্ত প্যাকেজ' }
+        ];
+
+        // Testimonials Data
+        const testimonials = [
+            { author: 'রহিম খান', rating: '⭐⭐⭐⭐⭐', text: 'অসাধারণ সেবা! দ্রুত ডেলিভারি এবং সাশ্রয়ী মূল্য।' },
+            { author: 'নাজমা বেগম', rating: '⭐⭐⭐⭐⭐', text: 'এখানে কিনলে মনে শান্তি থাকে। সম্পূর্ণ বিশ্বস্ত!' },
+            { author: 'করিম আহমেদ', rating: '⭐⭐⭐⭐⭐', text: 'প্রতিবার কিনি এবং সবসময় সন্তুষ্ট থাকি। সুপারিশ করি!' }
+        ];
+
+        let cart = [];
+
+        // Initialize
+        function init() {
+            renderProducts();
+            renderTestimonials();
+        }
+
+        // Render Products
+        function renderProducts() {
+            const container = document.getElementById('productsContainer');
+            container.innerHTML = products.map(product => `
+                <div class="product-card">
+                    <div class="product-icon">${product.icon}</div>
+                    <div class="product-name">${product.name}</div>
+                    <div class="product-description">${product.description}</div>
+                    <div class="product-price">${product.price} টাকা</div>
+                    <button class="add-to-cart" onclick="addToCart(${product.id})">কার্টে যোগ করুন</button>
+                </div>
+            `).join('');
+        }
+
+        // Render Testimonials
+        function renderTestimonials() {
+            const container = document.getElementById('testimonialsContainer');
+            container.innerHTML = testimonials.map(t => `
+                <div class="testimonial">
+                    <div class="testimonial-rating">${t.rating}</div>
+                    <div class="testimonial-text">"${t.text}"</div>
+                    <div class="testimo
